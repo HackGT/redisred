@@ -53,6 +53,7 @@ app.use(function(req, res, next) {
 // Start the server
 console.log('Connecting to redis...');
 redis.ping(function(err){
+  console.log(err);
   if (!err) {
     console.log('Connection successful. Server listening on port ' + port);
     app.listen(port);
