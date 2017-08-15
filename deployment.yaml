@@ -1,0 +1,14 @@
+git:
+    remote: https://github.com/HackGT/redisred.git
+    branch: master
+
+secrets:
+  - ADMIN_PASSWORD
+  - API_TOKEN
+
+env:
+    REDIS_URL: 'redis://:VS4VpVa6I5@redis-prod-redis/0' # TODO: pls no
+    ROOT_REDIRECT: 'https://hack.gt'
+    AUTH_SERVICE: 'https://auth.hack.gt'
+    AUTH_SERVICE_COOKIE: 'sso-auth'
+
