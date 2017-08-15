@@ -8,6 +8,10 @@ var adminUsername = process.env.ADMIN_USERNAME || 'admin';
 var adminPassword = process.env.ADMIN_PASSWORD || '123456';
 var rootRedirect = process.env.ROOT_REDIRECT || 'https://google.com';
 var apiToken = process.env.API_TOKEN || '1234567890abcdefghijklmnopqrstuvwxyz';
+var authService = {
+    url: process.env.AUTH_SERVICE,
+    cookie: process.env.AUTH_SERVICE_COOKIE
+};
 
 //Includes
 var authentication = require('./authentication');
@@ -37,7 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Initialize controllers
-var frontendController = require('./controllers/admin/FrontendController')(redis, passport);
+var frontendController = require('./controllers/admin/FrontendController')(redis, passport, authService);
 var apiController = require('./controllers/admin/APIController')(redis, apiToken);
 var redirectController = require('./controllers/RedirectController')(redis);
 
@@ -52,11 +56,12 @@ app.use(function(req, res, next) {
 
 // Start the server
 console.log('Connecting to redis...');
-redis.ping(function(err){
-  console.log(err);
+redis.ping(function(err) {
   if (!err) {
     console.log('Connection successful. Server listening on port ' + port);
     app.listen(port);
+  } else {
+    console.log(err);
   }
 });
 
